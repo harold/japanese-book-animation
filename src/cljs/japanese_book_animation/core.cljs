@@ -8,6 +8,13 @@
 (def state*
   (r/atom {:x 0}))
 
+(defn rectangle
+  [x]
+  [:rect {:x (+ (* x 2) (:x @state*)) :y 50
+          :width 1
+          :height 500
+          :style {:fill :black}}])
+
 (defn page
   []
   (r/create-class
@@ -26,10 +33,7 @@
     :reagent-render
     (fn []
       [:svg {:width "100%" :height "100%"}
-       [:rect {:x (:x @state*) :y 50
-               :width 300
-               :height 100
-               :style {:fill :red}}]])}))
+       (into [:g] (map rectangle (range 250)))])}))
 
 (defn reload
   []
